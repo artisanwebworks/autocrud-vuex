@@ -1,24 +1,6 @@
 # autocrud-vuex
 
-## Project setup
-```
-npm install
-```
+Expose [autocrud](https://github.com/artisanwebworks/autocrud-vuex) REST API resources as
+Vuex objects
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
