@@ -1,1 +1,0 @@
-export {registerAutoCrudStoreModule} from './autocrud-store-module'
