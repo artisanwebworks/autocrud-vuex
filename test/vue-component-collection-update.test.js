@@ -57,7 +57,7 @@ describe('resource deletion', () => {
         }
 
         // First populate the root loggedInUser resource with data
-        store.commit('fillRootResource', {key: 'loggedInUser', data: userData})
+        store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
 
         // Wait for component to finish rendering in response to user initialization
         return wrapper.vm.$nextTick()

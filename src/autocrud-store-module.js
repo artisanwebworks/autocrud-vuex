@@ -10,8 +10,7 @@ import axios from "axios"
  */
 export function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes) {
 
-    // Declare a state property for each resource declaration
-    // (initially undefined)
+    // Declare resources (initially undefined)
     let state = {}, getters = {}
     _.keys(resourceDeclarations).forEach(resourceKey => {
         state[resourceKey] = undefined
@@ -22,16 +21,50 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
 
     let mutations = {
 
-        fillRootResource(state, {key, data}) {
+        /**
+         * Assign new Resource instance to previously declared state property.
+         *
+         * @param state
+         * @param key - the identifier of a state property
+         * @param data - resource properties, optionally including expanded relations
+         */
+        instantiateRootResource(state, {key, data}) {
             state[key] = new Resource(data, {
                 type: resourceDeclarations[key],
                 resourceTypes,
                 store
             });
         },
-        
+
+        /**
+         * Assign new Resource to a given ResourceCollection, as a sub-resource" which
+         * is related to a state root-resource either directly or through
+         * a chain of ancestors.
+         *
+         * @param state
+         * @param resourceCollection - a ResourceCollection instance
+         * @param data - resource properties, optionally including expanded relations
+         */
         instantiateCollectionResource(state, {resourceCollection, data}) {
-            resourceCollection.instantiateNewResourceItem(data);
+            if (Array.isArray(data)) {
+                data.forEach(resourceData => {
+                    resourceCollection.instantiateNewResourceItem(resourceData)
+                })
+            } else {
+                resourceCollection.instantiateNewResourceItem(data);
+            }
+        },
+
+        /**
+         * Assign an existing Resource reference to root-resource state property.
+         *
+         * @param state
+         * @param key - the identifier of a state property
+         * @param resource - a Resource instance, possibly exposed as a sub-resource of
+         *   a different root-resource
+         */
+        assignRootResource(state, {key, resource}) {
+            state[key] = resource
         },
 
         removeResource(state, resource) {
@@ -57,6 +90,13 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
             }
         },
 
+        /**
+         * Set some subset of the properties on an existing Resource.
+         *
+         * @param state
+         * @param resource
+         * @param data
+         */
         setResourceData(state, {resource, data}) {
             _.forIn(data, (value, key) => {
                 resource[key] = value
@@ -68,6 +108,16 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
 
         createResource(context, {resourceCollection, data}) {
             return axios.post(resourceCollection._uri, data)
+                .then(result => {
+                    context.commit('instantiateCollectionResource', {
+                        resourceCollection,
+                        data: result.data
+                    })
+                });
+        },
+
+        bulkCreateResource(context, {resourceCollection, data}) {
+            return axios.post(resourceCollection._uri + '-bulk', data)
                 .then(result => {
                     context.commit('instantiateCollectionResource', {
                         resourceCollection,

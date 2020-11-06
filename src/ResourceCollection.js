@@ -46,6 +46,15 @@ export default class ResourceCollection extends Array {
         return this[this.length - 1]
     }
 
+    firstWhere(values) {
+        for (let i = 0; i < this.length; i++) {
+            if (_.isMatch(this[i], values)) {
+                return this[i]
+            }
+        }
+    }
+
+
     // MUTATORS
     // these will invoke underlying Vuex Store mutation
 
@@ -54,7 +63,11 @@ export default class ResourceCollection extends Array {
      * @returns a promise
      */
     create(data) {
-        return this._store.dispatch('createResource', {resourceCollection: this, data})
+        if (Array.isArray(data)) {
+            return this._store.dispatch('createResource', {resourceCollection: this, data});
+        } else {
+            return this._store.dispatch('bulkCreateResource', {resourceCollection: this, data});
+        }
     }
 
     /**

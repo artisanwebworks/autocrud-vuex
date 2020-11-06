@@ -26,7 +26,7 @@ describe('crud operations on store ResourceCollection', () => {
         const component = {
             template: '<div>' +
                       '<ul v-if="user"><li v-for="post in posts">{{post.body}}</li></ul>' +
-                      '<button @click="addPost"/>' +
+                      '<button @click="addBulkPosts"/>' +
                       '</div>',
             computed: {
 
@@ -38,8 +38,8 @@ describe('crud operations on store ResourceCollection', () => {
                 }
             },
             methods: {
-                addPost() {
-                    this.user.posts.create({body: "other foo"})
+                addBulkPosts() {
+                    this.user.posts.create([{body: "other foo 1"}, {body: "other foo 2"}])
                 }
             }
         }
@@ -66,13 +66,14 @@ describe('crud operations on store ResourceCollection', () => {
 
                 // Mock the axios post triggered by the subsequent button click
                 axios.post.mockResolvedValue({
-                    data: {id: 22, body: "other foo"}
+                    data: [{id: 22, body: "other foo1"}, {id: 22, body: "other foo2"}]
                 });
 
                 return wrapper.find('button').trigger('click')
             })
             .then( () => {
-                expect(wrapper.html()).toBe(formulateExpectedHtml('<li>foo</li><li>other foo</li>'))
+                let itemsHtml = '<li>foo</li><li>other foo1</li><li>other foo2</li>'
+                expect(wrapper.html()).toBe(formulateExpectedHtml(itemsHtml))
             })
 
     })

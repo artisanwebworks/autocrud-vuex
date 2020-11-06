@@ -15,7 +15,7 @@ describe('store module tests', () => {
         store = createStore({})
         registerAutoCrudStoreModule(
             store,
-            {loggedInUser: "user"},
+            {loggedInUser: "user", twin: "user"},
             resourceTypes
         )
 
@@ -25,7 +25,7 @@ describe('store module tests', () => {
             computed: {
 
                 // Map in getter defined dynamically by the auto-crud store module
-                ...mapGetters({user: "loggedInUser"})
+                ...mapGetters({user: "loggedInUser", twin: "twin"})
             }
         }
         wrapper = shallowMount(component, {
@@ -35,22 +35,22 @@ describe('store module tests', () => {
         })
     })
 
-    test('fillRootResource mutator assigns new Resource to state', () => {
+    test('instantiateRootResource mutator assigns new Resource to state', () => {
         expect(store.state.autocrud.loggedInUser).toBeUndefined()
-        store.commit('fillRootResource', {key: 'loggedInUser', data: userData})
+        store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
         expect(store.state.autocrud.loggedInUser?.id).toBe(1)
     })
 
     test('component re-renders when mapped getter changes', () => {
         expect(wrapper.html()).toBe('<div></div>')
-        store.commit('fillRootResource', {key: 'loggedInUser', data: userData})
+        store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
         return wrapper.vm.$nextTick().then(() => {
             expect(wrapper.html()).toBe('<div>1</div>')
         })
     })
 
     test('removeResource mutation updates store state', () => {
-        store.commit('fillRootResource', {key: 'loggedInUser', data: userData})
+        store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
         let post = store.state.autocrud.loggedInUser.posts.last()
         expect(post.id).toBe(11)
         store.commit('removeResource', post)
@@ -58,10 +58,17 @@ describe('store module tests', () => {
     })
 
     test('setResourceData mutation updates store state', () => {
-        store.commit('fillRootResource', {key: 'loggedInUser', data: userData})
+        store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
         let post = store.state.autocrud.loggedInUser.posts.last()
         expect(post.body).toBe("foo")
         store.commit('setResourceData', {resource: post, data: {body: 'updated foo'}})
         expect(store.state.autocrud.loggedInUser.posts.last().body).toBe('updated foo')
+    })
+
+    test('assignRootResource mutation updates store state', () => {
+        store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
+        let user  = store.state.autocrud.loggedInUser
+        store.commit('assignRootResource', {key: 'twin', resource: user})
+        expect(store.state.autocrud.twin.username).toBe('Dave')
     })
 })
