@@ -4,6 +4,11 @@ export default {
         posts: {
             type: "post",
             cardinality: "many"
+        },
+
+        starredPosts: {
+            type: "post",
+            cardinality: "many"
         }
     },
 

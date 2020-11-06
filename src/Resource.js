@@ -22,8 +22,9 @@ export default class Resource {
         // Partition data into attributes and relations
         let relationsData = {}
         _.forIn(data, (value, name) => {
-            if (_.has(relations, name)) {
-                relationsData[name] = value
+            let relationName = toCamel(name)
+            if (_.has(relations, relationName)) {
+                relationsData[relationName] = value
             } else {
 
                 // Set attributes on this object directly
@@ -32,6 +33,7 @@ export default class Resource {
         })
 
         // Create relations, passing initialization data from last step if available
+
         _.forIn(relations, (relationDef, relationName) => {
             let childNodeOptions = {
                 type: relationDef.type,
@@ -58,6 +60,12 @@ export default class Resource {
     delete() {
         return this._store.dispatch('deleteResource', this)
     }
-
 }
 
+const toCamel = (s) => {
+    return s.replace(/([-_][a-z])/ig, ($1) => {
+        return $1.toUpperCase()
+            .replace('-', '')
+            .replace('_', '');
+    });
+};

@@ -27,6 +27,10 @@ describe('resource REST endpoint URI generation', () => {
                     id: 14,
                     body: 'foo common',
                 }
+            ],
+
+            starred_posts: [
+                {id: 1111, post_id: 11}
             ]
         }
 
@@ -41,5 +45,10 @@ describe('resource REST endpoint URI generation', () => {
     test('firstWhere returns undefined if no match', () => {
         expect(user.posts.firstWhere({body: 'foo999'})).toBeUndefined()
     })
+
+    test('find via camel case relation', () => {
+        expect(user.starredPosts.firstWhere({post_id: 11}).id).toBe(1111)
+    })
+
 })
 
