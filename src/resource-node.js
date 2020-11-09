@@ -34,5 +34,5 @@ function deriveResourceUri(instance) {
     // Add URI prefix
     uriComponents.unshift('api')
 
-    return location.origin + '/' + uriComponents.join('/')
+    return location.origin + '/' + uriComponents.join('/').toLowerCase()
 }
