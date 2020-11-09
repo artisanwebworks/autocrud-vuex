@@ -64,9 +64,9 @@ export default class ResourceCollection extends Array {
      */
     create(data) {
         if (Array.isArray(data)) {
-            return this._store.dispatch('createResource', {resourceCollection: this, data});
-        } else {
             return this._store.dispatch('bulkCreateResource', {resourceCollection: this, data});
+        } else {
+            return this._store.dispatch('createResource', {resourceCollection: this, data});
         }
     }
 
