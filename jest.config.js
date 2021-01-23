@@ -4,14 +4,14 @@
  */
 
 module.exports = {
-  clearMocks: true,
-  moduleFileExtensions: [
-     "js",
-     "json",
-     "vue"
-  //   "jsx",
-  //   "ts",
-  //   "tsx",
-  //   "node"
-  ],
+    clearMocks: true,
+    moduleFileExtensions: [
+        "js",
+        "json",
+        "vue",
+        //   "jsx",
+        //   "ts",
+        //   "tsx",
+        //   "node"
+    ],
 };

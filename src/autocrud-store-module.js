@@ -113,6 +113,7 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
                         resourceCollection,
                         data: result.data
                     })
+                    return result.data.id
                 });
         },
 
