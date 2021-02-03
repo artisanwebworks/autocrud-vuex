@@ -1,5 +1,7 @@
 import Resource from "./Resource"
 import ResourceCollection from "./ResourceCollection";
+import {registerResourceTypes} from "./resourceTypes";
+
 const _ = require("lodash")
 import axios from "axios"
 
@@ -7,8 +9,43 @@ import axios from "axios"
  *
  * @param store
  * @param resourceDeclarations - [{key_1: type}, {key_2: type}, ...]
+ * @param resourceTypes - resource types definition object, which describes relations
+ *   between resources.
+ *
+ *   Example:
+ *
+          {
+
+            user: {
+
+                posts: {
+                    type: "post",
+                    cardinality: "many"
+                },
+
+                starredPosts: {
+                    type: "post",
+                    cardinality: "many"
+                }
+            },
+
+            post: {
+
+                replies: {
+                    type: "comment",
+                    cardinality: "many"
+                }
+
+            },
+
+            comment: {
+
+            }
+        }
  */
 export function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes) {
+
+    registerResourceTypes(resourceTypes)
 
     // Declare resources (initially undefined)
     let state = {}, getters = {}
@@ -31,7 +68,6 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
         instantiateRootResource(state, {key, data}) {
             state[key] = new Resource(data, {
                 type: resourceDeclarations[key],
-                resourceTypes,
                 store
             });
         },
@@ -101,6 +137,14 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
             _.forIn(data, (value, key) => {
                 resource[key] = value
             })
+        },
+
+        /**
+         * Replace all resources data, including properties and related sub-resources.
+         *
+         */
+        setFreshData(state, {resource, freshData}) {
+            resource._hydrate(freshData)
         }
     }
 
@@ -123,6 +167,16 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
                     context.commit('instantiateCollectionResource', {
                         resourceCollection,
                         data: result.data
+                    })
+                });
+        },
+
+        refreshResource(context, resource) {
+            return axios.get(resource._uri)
+                .then(result => {
+                    context.commit('setFreshData', {
+                        resource,
+                        freshData: result.data
                     })
                 });
         },

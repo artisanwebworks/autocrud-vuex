@@ -1,5 +1,7 @@
 import Resource from "../src/Resource";
 import resourceTypes from './fixtures/resource-types'
+import {registerResourceTypes} from "../src/resourceTypes";
+registerResourceTypes(resourceTypes)
 
 describe('resource REST endpoint URI generation', () => {
 
@@ -24,7 +26,7 @@ describe('resource REST endpoint URI generation', () => {
             ]
         }
 
-        user = new Resource(userData, {type: 'user', resourceTypes})
+        user = new Resource(userData, {type: 'user'})
 
     })
 

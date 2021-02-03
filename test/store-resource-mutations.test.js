@@ -1,8 +1,9 @@
 import {shallowMount} from '@vue/test-utils'
 import {createStore, mapGetters} from 'vuex'
 import {registerAutoCrudStoreModule} from '../src/autocrud-store-module'
-import resourceTypes from './fixtures/resource-types'
 import {userData} from './fixtures/logged-in-user-data'
+
+import resourceTypes from './fixtures/resource-types'
 
 describe('store module tests', () => {
 

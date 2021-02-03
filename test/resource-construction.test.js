@@ -1,14 +1,17 @@
 import Resource from "../src/Resource";
-import resourceTypes from './fixtures/resource-types'
 import ResourceCollection from "../src/ResourceCollection";
 import {userData} from './fixtures/logged-in-user-data'
+
+import resourceTypes from './fixtures/resource-types'
+import {registerResourceTypes} from "../src/resourceTypes";
+registerResourceTypes(resourceTypes)
 
 describe('resource construction with deep initialization data', () => {
 
     let user
 
     beforeAll(() => {
-        user = new Resource(userData, {type: 'user', resourceTypes})
+        user = new Resource(userData, {type: 'user'})
     })
 
     test('user resource filled with attributes from data', () => {
@@ -45,7 +48,7 @@ describe('resource construction with shallow initialization data', () => {
             username: 'Dave',
         }
 
-        user = new Resource(userData, {type: 'user', resourceTypes})
+        user = new Resource(userData, {type: 'user'})
 
     })
 
