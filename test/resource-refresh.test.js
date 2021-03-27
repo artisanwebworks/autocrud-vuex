@@ -1,7 +1,7 @@
 
 import {createStore} from 'vuex'
 import {registerAutoCrudStoreModule} from '../src/autocrud-store-module'
-
+import {userData} from "./fixtures/logged-in-user-data"
 import resourceTypes from './fixtures/resource-types'
 
 import axios from "axios"
@@ -11,7 +11,6 @@ describe('refreshing user resource', () => {
 
     let _store
     let _user
-    let _userData
 
     beforeAll(() => {
 
@@ -24,43 +23,16 @@ describe('refreshing user resource', () => {
             resourceTypes
         )
 
-        _userData = {
-            id: 1,
-            username: 'Dave',
-            posts: [
-                {
-                    id: 11,
-                    body: 'foo1',
-                },
-                {
-                    id: 12,
-                    body: 'foo2',
-                },
-                {
-                    id: 13,
-                    body: 'foo common',
-                },
-                {
-                    id: 14,
-                    body: 'foo common',
-                }
-            ],
-
-            starred_posts: [
-                {id: 1111, post_id: 11}
-            ]
-        }
-
-        _store.commit('instantiateRootResource', {key: 'loggedInUser', data: _userData})
+        _store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
         _user = _store.state.autocrud.loggedInUser
     })
 
     test('user altered username property picked up on refresh', () => {
 
         // Mock a result of user resource 'refresh()' GET call where username has changed
-        _userData.username = 'Foo'
+        userData.username = 'Foo'
         axios.get.mockResolvedValue({
-            data: _userData
+            data: userData
         });
 
         return _user.refresh().then( () => {
@@ -73,9 +45,9 @@ describe('refreshing user resource', () => {
 
         // Mock a result of user resource 'refresh()' GET call where post
         // relation item has been altered, but none added or removed
-        _userData.posts[0].body = 'altered'
+        userData.posts[0].body = 'altered'
         axios.get.mockResolvedValue({
-            data: _userData
+            data: userData
         });
 
         return _user.refresh().then( () => {
@@ -90,9 +62,9 @@ describe('refreshing user resource', () => {
 
         // Mock a result of user resource 'refresh()' GET call where a new item
         // has been added
-        _userData.posts.push({id: 15, body: 'new post'})
+        userData.posts.push({id: 13, body: 'new post'})
         axios.get.mockResolvedValue({
-            data: _userData
+            data: userData
         });
 
         return _user.refresh().then( () => {
@@ -107,9 +79,9 @@ describe('refreshing user resource', () => {
 
         // Mock a result of user resource 'refresh()' GET call where a new item
         // has been added
-        _userData.posts.pop()
+        userData.posts.pop()
         axios.get.mockResolvedValue({
-            data: _userData
+            data: userData
         });
 
         return _user.refresh().then( () => {

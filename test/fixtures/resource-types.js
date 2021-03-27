@@ -10,6 +10,11 @@ export default {
         starredPosts: {
             type: "post",
             cardinality: "many"
+        },
+
+        profile: {
+            type: "profile",
+            cardinality: "one"
         }
     },
 
@@ -23,6 +28,10 @@ export default {
     },
 
     comment: {
+
+    },
+
+    profile: {
 
     }
 }

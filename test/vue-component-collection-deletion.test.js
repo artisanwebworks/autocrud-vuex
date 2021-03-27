@@ -62,7 +62,11 @@ describe('resource deletion', () => {
         // Wait for component to finish rendering in response to user initialization
         return wrapper.vm.$nextTick()
             .then(() => {
-                expect(normalizedActualHtml()).toBe(formulateExpectedHtml('<li>foo</li>'))
+                expect(normalizedActualHtml()).toBe(
+                    formulateExpectedHtml(
+                        '<li>foo</li><li>foo2</li>'
+                    )
+                )
 
                 // Mock the axios post triggered by the subsequent button click
                 axios.delete.mockResolvedValue({});
@@ -75,7 +79,7 @@ describe('resource deletion', () => {
             .then( () => {
 
                 // Expect empty <ul>
-                expect(wrapper.html()).toBe(formulateExpectedHtml(''))
+                expect(wrapper.html()).toBe(formulateExpectedHtml('<li>foo</li>'))
             })
 
     })

@@ -53,15 +53,15 @@ describe('store module tests', () => {
     test('removeResource mutation updates store state', () => {
         store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
         let post = store.state.autocrud.loggedInUser.posts.last()
-        expect(post.id).toBe(11)
+        expect(post.id).toBe(12)
         store.commit('removeResource', post)
-        expect(store.state.autocrud.loggedInUser.posts.length).toBe(0)
+        expect(store.state.autocrud.loggedInUser.posts.length).toBe(1)
     })
 
     test('setResourceData mutation updates store state', () => {
         store.commit('instantiateRootResource', {key: 'loggedInUser', data: userData})
         let post = store.state.autocrud.loggedInUser.posts.last()
-        expect(post.body).toBe("foo")
+        expect(post.body).toBe("foo2")
         store.commit('setResourceData', {resource: post, data: {body: 'updated foo'}})
         expect(store.state.autocrud.loggedInUser.posts.last().body).toBe('updated foo')
     })

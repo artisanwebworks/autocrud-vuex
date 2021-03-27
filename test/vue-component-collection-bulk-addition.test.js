@@ -62,7 +62,9 @@ describe('crud operations on store ResourceCollection', () => {
         // Wait for component to finish rendering in response to user initialization
         return wrapper.vm.$nextTick()
             .then(() => {
-                expect(normalizedActualHtml()).toBe(formulateExpectedHtml('<li>foo</li>'))
+                expect(normalizedActualHtml()).toBe(
+                    formulateExpectedHtml('<li>foo</li><li>foo2</li>'
+                    ))
 
                 // Mock the axios post triggered by the subsequent button click
                 axios.post.mockResolvedValue({
@@ -72,7 +74,7 @@ describe('crud operations on store ResourceCollection', () => {
                 return wrapper.find('button').trigger('click')
             })
             .then( () => {
-                let itemsHtml = '<li>foo</li><li>other foo1</li><li>other foo2</li>'
+                let itemsHtml = '<li>foo</li><li>foo2</li><li>other foo1</li><li>other foo2</li>'
                 expect(wrapper.html()).toBe(formulateExpectedHtml(itemsHtml))
             })
 

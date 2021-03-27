@@ -14,6 +14,16 @@ export let userData = {
                     message: 'bar'
                 }
             ],
+        },
+        {
+            id: 12,
+            body: 'foo2',
+            replies: [
+                {
+                    id: 111,
+                    message: 'bar'
+                }
+            ],
         }
     ],
 
@@ -21,5 +31,10 @@ export let userData = {
 
         {id: 1111, post_id: 11}
 
-    ]
+    ],
+
+    profile: {
+        id: 11111,
+        address: "123 bar st"
+    }
 }

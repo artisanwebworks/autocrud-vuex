@@ -56,7 +56,6 @@ export default class Resource {
         })
 
         // Create relations, passing initialization data from last step if available
-
         _.forIn(this._relations, (relationDef, relationName) => {
             let childNodeOptions = {
                 type: relationDef.type,

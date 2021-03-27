@@ -1,7 +1,7 @@
 import Resource from "../src/Resource";
 import {registerResourceTypes} from "../src/resourceTypes";
 import resourceTypes from './fixtures/resource-types'
-
+import {userData} from "./fixtures/logged-in-user-data"
 
 describe('resource REST endpoint URI generation', () => {
 
@@ -9,36 +9,8 @@ describe('resource REST endpoint URI generation', () => {
 
     beforeAll(() => {
 
-        let userData = {
-            id: 1,
-            username: 'Dave',
-            posts: [
-                {
-                    id: 11,
-                    body: 'foo1',
-                },
-                {
-                    id: 12,
-                    body: 'foo2',
-                },
-                {
-                    id: 13,
-                    body: 'foo common',
-                },
-                {
-                    id: 14,
-                    body: 'foo common',
-                }
-            ],
-
-            starred_posts: [
-                {id: 1111, post_id: 11}
-            ]
-        }
-
         registerResourceTypes(resourceTypes)
         user = new Resource(userData, {type: 'user'})
-
     })
 
     test('find first post with matching body', () => {
