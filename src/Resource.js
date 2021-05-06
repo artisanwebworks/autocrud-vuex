@@ -13,12 +13,14 @@ export default class Resource {
      * @param id - resource id
      * @param data - attributes less id, and data to hydrate related resources
      * @param nodeOptions - describes this resource node
+     * @param extension
      */
-    constructor({id, ...data}, nodeOptions) {
+    constructor({id, ...data}, nodeOptions, extension) {
         this.id = id;
         mixinResourceNode(this, {id, ...nodeOptions})
         this._relations = getTypeRelations(this._type)
         this._hydrate(data)
+        Object.assign(this, extension)
     }
 
 

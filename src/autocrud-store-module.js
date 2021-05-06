@@ -42,8 +42,14 @@ import axios from "axios"
 
             }
         }
+ * @param extensions - methods added to resource types
  */
-export function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes) {
+export function registerAutoCrudStoreModule(
+    store,
+    resourceDeclarations,
+    resourceTypes,
+    extensions
+) {
 
     registerResourceTypes(resourceTypes)
 
@@ -68,7 +74,8 @@ export function registerAutoCrudStoreModule(store, resourceDeclarations, resourc
         instantiateRootResource(state, {key, data}) {
             state[key] = new Resource(data, {
                 type: resourceDeclarations[key],
-                store
+                store,
+                extension: extensions[key]
             });
         },
 
