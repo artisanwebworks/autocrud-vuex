@@ -70,6 +70,17 @@ export default class Resource {
         })
     }
 
+    /**
+     * Convenience helper to fetch a root resource registered by the
+     * client code in the vuex autocrud store module.
+     *
+     * @param name
+     * @return Resource or subclass
+     */
+    getRootResource(name) {
+        return this._store.state.autocrud[name]
+    }
+
 }
 
 const toCamel = (s) => {
