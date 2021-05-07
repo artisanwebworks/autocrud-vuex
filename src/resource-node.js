@@ -7,17 +7,13 @@
  * @param parent - a reference to parent Resource or ResourceCollection.
  * @param store
  */
-export default (instance, {type, name, parent, store, extension}) => {
+export default (instance, {type, name, parent, store}) => {
 
     instance._type = type
     instance._parent = parent
     instance._name = name
     instance._store = store
     instance._uri = deriveResourceUri(instance)
-
-    if (extension) {
-        Object.assign(instance, extension)
-    }
 }
 
 function deriveResourceUri(instance) {

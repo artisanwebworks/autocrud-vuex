@@ -1,4 +1,3 @@
-import Resource from "../src/Resource";
 import {userData} from './fixtures/logged-in-user-data'
 import extensions from './fixtures/resource-extensions'
 import resourceTypes from './fixtures/resource-types'
@@ -11,7 +10,7 @@ describe('constructed resource includes extensions method', () => {
     let user
 
     beforeAll(() => {
-        user = new Resource(userData, {type: 'user', extension: extensions.user})
+        user = new extensions.user(userData, {type: 'user'})
     })
 
     test('extension method is exposed', () => {
