@@ -6,12 +6,12 @@ import {registerResourceTypes} from "../src/resourceTypes";
 
 registerResourceTypes(resourceTypes)
 
-describe('resource construction with deep initialization data', () => {
+describe('constructed resource includes extensions method', () => {
 
     let user
 
     beforeAll(() => {
-        user = new Resource(userData, {type: 'user'}, extensions.user)
+        user = new Resource(userData, {type: 'user', extension: extensions.user})
     })
 
     test('extension method is exposed', () => {

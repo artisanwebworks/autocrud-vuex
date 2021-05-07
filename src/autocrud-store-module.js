@@ -42,13 +42,14 @@ import axios from "axios"
 
             }
         }
- * @param extensions - methods added to resource types
+ * @param extensions - an object with resource names as properties, mapping to an
+ *   object of methods that will be mixed in to instances of the resource type.
  */
 export function registerAutoCrudStoreModule(
     store,
     resourceDeclarations,
     resourceTypes,
-    extensions
+    extensions = {}
 ) {
 
     registerResourceTypes(resourceTypes)
@@ -72,10 +73,11 @@ export function registerAutoCrudStoreModule(
          * @param data - resource properties, optionally including expanded relations
          */
         instantiateRootResource(state, {key, data}) {
+            const type = resourceDeclarations[key]
             state[key] = new Resource(data, {
-                type: resourceDeclarations[key],
+                type,
                 store,
-                extension: extensions[key]
+                extension: extensions[type]
             });
         },
 
