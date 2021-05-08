@@ -1,6 +1,7 @@
 
 import mixinResourceNode from "./resource-node";
 import Resource from "./Resource";
+import {getTypeResourceClass} from "./resourceTypes";
 const _ = require("lodash")
 
 export default class ResourceCollection extends Array {
@@ -76,7 +77,8 @@ export default class ResourceCollection extends Array {
      * @returns the newly instantiated Resource
      */
     instantiateNewResourceItem(data) {
-        let newResource = new Resource(data, this._childNodeOptions())
+        const resourceClass = getTypeResourceClass(this._type)
+        const newResource = new resourceClass(data, this._childNodeOptions())
         this.push(newResource)
         return newResource
     }

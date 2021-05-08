@@ -8,6 +8,13 @@ export default {
             return this.posts.length % 2 === 0
         }
 
+    },
+
+    post: class extends Resource {
+
+        isShitPost() {
+            return this.body.length < 10
+        }
     }
 
 }

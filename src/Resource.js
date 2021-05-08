@@ -1,7 +1,7 @@
 
 import mixinResourceNode from "./resource-node"
 import ResourceCollection from "./ResourceCollection"
-import {getTypeRelations} from "./resourceTypes";
+import {getTypeRelations, getTypeResourceClass} from "./resourceTypes";
 
 const _ = require("lodash")
 
@@ -66,7 +66,7 @@ export default class Resource {
             data = relationsData[relationName]
             this[relationName] = relationDef.cardinality === 'many' ?
                 new ResourceCollection(data, childNodeOptions) :
-                new Resource(data, childNodeOptions)
+                new (getTypeResourceClass(relationDef.type))(data, childNodeOptions)
         })
     }
 

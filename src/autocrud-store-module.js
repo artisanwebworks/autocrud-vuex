@@ -1,6 +1,5 @@
-import Resource from "./Resource"
 import ResourceCollection from "./ResourceCollection";
-import {registerResourceTypes} from "./resourceTypes";
+import {registerResourceTypes, getTypeResourceClass} from "./resourceTypes";
 
 const _ = require("lodash")
 import axios from "axios"
@@ -52,7 +51,7 @@ export function registerAutoCrudStoreModule(
     extensionClasses = {}
 ) {
 
-    registerResourceTypes(resourceTypes)
+    registerResourceTypes(resourceTypes, extensionClasses)
 
     // Declare resources (initially undefined)
     let state = {}, getters = {}
@@ -74,7 +73,7 @@ export function registerAutoCrudStoreModule(
          */
         instantiateRootResource(state, {key, data}) {
             const type = resourceDeclarations[key]
-            const resourceClass = extensionClasses[type] ?? Resource
+            const resourceClass = getTypeResourceClass(type)
             state[key] = new resourceClass(data, {
                 type,
                 store
