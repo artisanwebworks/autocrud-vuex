@@ -1,8 +1,9 @@
 
+const _ = require('lodash');
+
 import mixinResourceNode from "./resource-node";
-import Resource from "./Resource";
 import {getTypeResourceClass} from "./resourceTypes";
-const _ = require("lodash")
+
 
 export default class ResourceCollection extends Array {
 

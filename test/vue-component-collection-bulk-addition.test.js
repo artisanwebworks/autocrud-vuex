@@ -3,6 +3,7 @@ import {createStore, mapGetters} from 'vuex'
 import {registerAutoCrudStoreModule} from '../src/autocrud-store-module'
 import resourceTypes from './fixtures/resource-types'
 import {userData} from './fixtures/logged-in-user-data'
+import {stripWhitespace} from "./strip-whitespace";
 
 import axios from "axios"
 jest.mock('axios')
@@ -68,14 +69,14 @@ describe('crud operations on store ResourceCollection', () => {
 
                 // Mock the axios post triggered by the subsequent button click
                 axios.post.mockResolvedValue({
-                    data: [{id: 22, body: "other foo1"}, {id: 22, body: "other foo2"}]
+                    data: [{id: 22, body: "other-foo1"}, {id: 22, body: "other-foo2"}]
                 });
 
                 return wrapper.find('button').trigger('click')
             })
             .then( () => {
-                let itemsHtml = '<li>foo</li><li>foo2</li><li>other foo1</li><li>other foo2</li>'
-                expect(wrapper.html()).toBe(formulateExpectedHtml(itemsHtml))
+                let itemsHtml = '<li>foo</li><li>foo2</li><li>other-foo1</li><li>other-foo2</li>'
+                expect(stripWhitespace(wrapper.html())).toBe(formulateExpectedHtml(itemsHtml))
             })
 
     })

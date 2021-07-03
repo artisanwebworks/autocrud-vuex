@@ -1,9 +1,10 @@
 
+const _ = require('lodash');
+
 import mixinResourceNode from "./resource-node"
 import ResourceCollection from "./ResourceCollection"
 import {getTypeRelations, getTypeResourceClass} from "./resourceTypes";
 
-const _ = require("lodash")
 
 export default class Resource {
 

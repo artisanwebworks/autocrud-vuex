@@ -1,8 +1,10 @@
+
+import axios from "axios"
+const _ = require('lodash');
+
 import ResourceCollection from "./ResourceCollection";
 import {registerResourceTypes, getTypeResourceClass} from "./resourceTypes";
 
-const _ = require("lodash")
-import axios from "axios"
 
 /**
  *

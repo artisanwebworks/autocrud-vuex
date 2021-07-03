@@ -8,10 +8,6 @@ module.exports = {
     moduleFileExtensions: [
         "js",
         "json",
-        "vue",
-        //   "jsx",
-        //   "ts",
-        //   "tsx",
-        //   "node"
-    ],
+        "vue"
+    ]
 };

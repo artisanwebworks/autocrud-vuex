@@ -3,6 +3,7 @@ import {createStore, mapGetters} from 'vuex'
 import {registerAutoCrudStoreModule} from '../src/autocrud-store-module'
 import resourceTypes from './fixtures/resource-types'
 import {userData} from './fixtures/logged-in-user-data'
+import {stripWhitespace} from "./strip-whitespace";
 
 import axios from "axios"
 jest.mock('axios')
@@ -79,7 +80,7 @@ describe('resource deletion', () => {
             .then( () => {
 
                 // Expect empty <ul>
-                expect(wrapper.html()).toBe(formulateExpectedHtml('<li>foo</li>'))
+                expect(stripWhitespace(wrapper.html())).toBe(formulateExpectedHtml('<li>foo</li>'))
             })
 
     })

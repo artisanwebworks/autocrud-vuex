@@ -3,6 +3,7 @@ import {createStore, mapGetters} from 'vuex'
 import {registerAutoCrudStoreModule} from '../src/autocrud-store-module'
 import resourceTypes from './fixtures/resource-types'
 import {userData} from './fixtures/logged-in-user-data'
+import {stripWhitespace} from "./strip-whitespace";
 
 import axios from "axios"
 jest.mock('axios')
@@ -63,7 +64,7 @@ describe('resource deletion', () => {
         return wrapper.vm.$nextTick()
             .then(() => {
                 // Mock the axios post triggered by the subsequent button click
-                axios.patch.mockResolvedValue({data: {id:11, body:"updated foo"}});
+                axios.patch.mockResolvedValue({data: {id:12, body:"updated-foo"}});
 
                 return wrapper.find('button').trigger('click')
             })
@@ -72,9 +73,9 @@ describe('resource deletion', () => {
             })
             .then( () => {
 
-                expect(wrapper.html()).toBe(
+                expect(stripWhitespace(wrapper.html())).toBe(
                     formulateExpectedHtml(
-                        '<li>foo</li><li>updated foo</li>'
+                        '<li>foo</li><li>updated-foo</li>'
                     )
                 )
             })
