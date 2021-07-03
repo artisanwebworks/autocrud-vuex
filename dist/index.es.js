@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 /**
  *
@@ -41,7 +42,6 @@ function deriveResourceUri(instance) {
   return location.origin + '/' + uriComponents.join('/').toLowerCase();
 }
 
-const _$2 = require('lodash');
 class Resource {
   /**
    * Construct a single-resource resource node from raw data.
@@ -86,10 +86,10 @@ class Resource {
     // Partition data into attributes and relations
     let relationsData = {};
 
-    _$2.forIn(data, (value, name) => {
+    _.forIn(data, (value, name) => {
       let relationName = toCamel(name);
 
-      if (_$2.has(this._relations, relationName)) {
+      if (_.has(this._relations, relationName)) {
         relationsData[relationName] = value;
       } else {
         // Set attributes on this object directly
@@ -98,7 +98,7 @@ class Resource {
     }); // Create relations, passing initialization data from last step if available
 
 
-    _$2.forIn(this._relations, (relationDef, relationName) => {
+    _.forIn(this._relations, (relationDef, relationName) => {
       let childNodeOptions = {
         type: relationDef.type,
         parent: this,
@@ -155,7 +155,6 @@ function getTypeResourceClass(type) {
   return (_extensionClasses$typ = _extensionClasses[type]) !== null && _extensionClasses$typ !== void 0 ? _extensionClasses$typ : Resource;
 }
 
-const _$1 = require('lodash');
 class ResourceCollection extends Array {
   /**
    * Construct a collection-resource resource node from raw data.
@@ -185,7 +184,7 @@ class ResourceCollection extends Array {
     }; // Instantiate collection Resource instances from initialization data
 
 
-    _$1.forEach(collectionData, resourceData => {
+    _.forEach(collectionData, resourceData => {
       this.instantiateNewResourceItem(resourceData);
     });
   } // GETTERS
@@ -197,7 +196,7 @@ class ResourceCollection extends Array {
 
   firstWhere(values) {
     for (let i = 0; i < this.length; i++) {
-      if (_$1.isMatch(this[i], values)) {
+      if (_.isMatch(this[i], values)) {
         return this[i];
       }
     }
@@ -247,7 +246,6 @@ class ResourceCollection extends Array {
 
 }
 
-const _ = require('lodash');
 /**
  *
  * @param store
