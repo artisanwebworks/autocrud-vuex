@@ -1,6 +1,6 @@
 
 import axios from "axios"
-const _ = require('lodash');
+import _ from "lodash"
 
 import ResourceCollection from "./ResourceCollection";
 import {registerResourceTypes, getTypeResourceClass} from "./resourceTypes";

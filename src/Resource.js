@@ -1,5 +1,4 @@
-
-const _ = require('lodash');
+import _ from "lodash"
 
 import mixinResourceNode from "./resource-node"
 import ResourceCollection from "./ResourceCollection"
