@@ -2,7 +2,7 @@
   "name": "autocrud-vuex",
   "version": "0.1.0",
   "private": true,
-  "main":"dist/autocrud-store-module.es.js",
+  "main":"dist/index.es.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

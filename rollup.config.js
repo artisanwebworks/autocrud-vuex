@@ -5,11 +5,11 @@ import babel from '@rollup/plugin-babel';
 export default {
     external: ['axios', 'lodash'],
 
-    input: 'src/autocrud-store-module.js',
+    input: 'src/index.js',
 
     output: {
-        file: 'dist/autocrud-store-module.es.js',
-        format: 'cjs'
+        file: 'dist/index.es.js',
+        format: 'es'
     },
 
     plugins: [

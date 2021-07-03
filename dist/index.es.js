@@ -1,12 +1,4 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var axios = require('axios');
-
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var axios__default = /*#__PURE__*/_interopDefaultLegacy(axios);
+import axios from 'axios';
 
 /**
  *
@@ -420,7 +412,7 @@ function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes,
       resourceCollection,
       data
     }) {
-      return axios__default['default'].post(resourceCollection._uri, data).then(result => {
+      return axios.post(resourceCollection._uri, data).then(result => {
         context.commit('instantiateCollectionResource', {
           resourceCollection,
           data: result.data
@@ -433,7 +425,7 @@ function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes,
       resourceCollection,
       data
     }) {
-      return axios__default['default'].post(resourceCollection._uri + '-bulk', data).then(result => {
+      return axios.post(resourceCollection._uri + '-bulk', data).then(result => {
         context.commit('instantiateCollectionResource', {
           resourceCollection,
           data: result.data
@@ -442,7 +434,7 @@ function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes,
     },
 
     refreshResource(context, resource) {
-      return axios__default['default'].get(resource._uri).then(result => {
+      return axios.get(resource._uri).then(result => {
         context.commit('setFreshData', {
           resource,
           freshData: result.data
@@ -454,7 +446,7 @@ function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes,
       resource,
       data
     }) {
-      return axios__default['default'].patch(resource._uri, data).then(result => {
+      return axios.patch(resource._uri, data).then(result => {
         // The API returns the entire object; filter down
         // to only the updated fields
         let resultData = _.pick(result.data, _.keys(data));
@@ -467,7 +459,7 @@ function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes,
     },
 
     deleteResource(context, resource) {
-      return axios__default['default'].delete(resource._uri).then(() => {
+      return axios.delete(resource._uri).then(() => {
         context.commit('removeResource', resource);
       });
     }
@@ -481,4 +473,4 @@ function registerAutoCrudStoreModule(store, resourceDeclarations, resourceTypes,
   });
 }
 
-exports.registerAutoCrudStoreModule = registerAutoCrudStoreModule;
+export { Resource, ResourceCollection, registerAutoCrudStoreModule };
